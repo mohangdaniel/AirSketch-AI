@@ -88,8 +88,11 @@ If video does not appear, change camera index in code:
 ## Controls
 
 Index finger up → Start drawing
+
 Open palm → Stop drawing
+
 C key → Clear canvas
+
 Q key → Quit application
 
 ---
