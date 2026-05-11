@@ -1,20 +1,20 @@
-Got it. Here is a **clean, copy-paste ready README.md** with proper headings, spacing, and no messy symbols or decorative formatting.
+Perfect. Here is your **clean, copy-paste ready README.md updated with your project name “AirSketch AI”** and kept professional, minimal, and recruiter-friendly.
 
 ---
 
-# AirDraw AI
+# AirSketch AI
 
-Draw in the air using your hand. Turn motion into real-time digital sketches using computer vision.
+Draw in the air using your hand. Convert motion into real-time digital sketches using computer vision.
 
 ---
 
 ## Overview
 
-AirDraw AI is a real-time computer vision system that converts hand movements into digital drawing input using a standard webcam.
+AirSketch AI is a real-time computer vision system that transforms hand gestures into digital drawing input using a standard webcam.
 
-It tracks the index finger and renders strokes on a virtual canvas, enabling touch-free sketching.
+It tracks the index finger and converts movement into continuous strokes on a virtual canvas.
 
-This project serves as a foundation for gesture-based interaction systems and future AI-driven sketch-to-object generation.
+This project is designed as a foundation for gesture-based interaction systems and future AI-driven sketch-to-object generation.
 
 ---
 
@@ -54,14 +54,14 @@ NumPy
 
 Clone the repository:
 
-```bash
-git clone https://github.com/your-username/airdraw-ai.git
-cd airdraw-ai
+```bash id="clone1"
+git clone https://github.com/your-username/airsketch-ai.git
+cd airsketch-ai
 ```
 
 Install dependencies:
 
-```bash
+```bash id="install1"
 pip install opencv-python mediapipe numpy
 ```
 
@@ -69,7 +69,7 @@ pip install opencv-python mediapipe numpy
 
 ## Run the Project
 
-```bash
+```bash id="run1"
 python main.py
 ```
 
@@ -85,7 +85,7 @@ DroidCam (mobile as webcam)
 
 If video does not appear, change camera index in code:
 
-0 or 1 depending on your device
+0 or 1 depending on your system
 
 ---
 
@@ -132,13 +132,3 @@ The goal is to replace traditional input devices with natural hand movement inte
 
 Experimental prototype stage.
 
----
-
-If you want next step, I can upgrade this into a **high-impact GitHub README with:**
-
-* architecture diagram section
-* demo GIF placement guide
-* “project story” section (for recruiters)
-* startup-level positioning statement
-
-Just tell me.
