@@ -1,7 +1,3 @@
-Perfect. Here is your **clean, copy-paste ready README.md updated with your project name “AirSketch AI”** and kept professional, minimal, and recruiter-friendly.
-
----
-
 # AirSketch AI
 
 Draw in the air using your hand. Convert motion into real-time digital sketches using computer vision.
