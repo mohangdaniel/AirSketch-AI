@@ -4,6 +4,23 @@ from mediapipe.tasks.python import vision
 from mediapipe.tasks.python import BaseOptions
 
 
+# Manual hand connections
+HAND_CONNECTIONS = [
+
+    (0,1),(1,2),(2,3),(3,4),
+
+    (0,5),(5,6),(6,7),(7,8),
+
+    (5,9),(9,10),(10,11),(11,12),
+
+    (9,13),(13,14),(14,15),(15,16),
+
+    (13,17),(17,18),(18,19),(19,20),
+
+    (0,17)
+]
+
+
 class HandTracker:
 
     def __init__(self):
@@ -25,6 +42,60 @@ class HandTracker:
     def finger_up(self, tip, pip):
         return tip.y < pip.y
 
+    def draw_landmarks(self, frame, landmarks):
+
+        h, w, _ = frame.shape
+
+        # DRAW CONNECTIONS
+        for connection in HAND_CONNECTIONS:
+
+            start_idx = connection[0]
+            end_idx = connection[1]
+
+            start = landmarks[start_idx]
+            end = landmarks[end_idx]
+
+            x1 = int(start.x * w)
+            y1 = int(start.y * h)
+
+            x2 = int(end.x * w)
+            y2 = int(end.y * h)
+
+            cv2.line(
+                frame,
+                (x1, y1),
+                (x2, y2),
+                (0, 255, 255),
+                2,
+                cv2.LINE_AA
+            )
+
+        # DRAW NODES
+        for idx, landmark in enumerate(landmarks):
+
+            x = int(landmark.x * w)
+            y = int(landmark.y * h)
+
+            if idx in [4, 8, 12, 16, 20]:
+
+                cv2.circle(
+                    frame,
+                    (x, y),
+                    10,
+                    (0, 255, 0),
+                    -1
+                )
+
+            else:
+
+                cv2.circle(
+                    frame,
+                    (x, y),
+                    5,
+                    (255, 0, 255),
+                    -1
+                )
+
     def process_frame(self, frame):
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -41,9 +112,12 @@ class HandTracker:
 
         if result.hand_landmarks:
 
-            h, w, _ = frame.shape
-
             hand = result.hand_landmarks[0]
+
+            # Draw mesh
+            self.draw_landmarks(frame, hand)
+
+            h, w, _ = frame.shape
 
             # Finger landmarks
             index_tip = hand[8]
@@ -58,7 +132,7 @@ class HandTracker:
             pinky_tip = hand[20]
             pinky_pip = hand[18]
 
-            # finger states
+            # Finger states
             index_up = self.finger_up(index_tip, index_pip)
 
             middle_up = self.finger_up(middle_tip, middle_pip)
@@ -67,8 +141,7 @@ class HandTracker:
 
             pinky_up = self.finger_up(pinky_tip, pinky_pip)
 
-            # DRAW ONLY IF:
-            # ONLY index finger is up
+            # ONLY INDEX FINGER = DRAW
             if (
                 index_up and
                 not middle_up and
@@ -83,6 +156,12 @@ class HandTracker:
 
                 draw_mode = True
 
-                cv2.circle(frame, fingertip, 12, (0, 255, 0), -1)
+                cv2.circle(
+                    frame,
+                    fingertip,
+                    15,
+                    (0, 255, 0),
+                    -1
+                )
 
         return frame, fingertip, draw_mode

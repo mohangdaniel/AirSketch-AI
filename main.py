@@ -31,15 +31,11 @@ while True:
 
     frame, fingertip, draw_mode = tracker.process_frame(frame)
 
-    # -----------------------------------
     # DRAW MODE
-    # -----------------------------------
-
     if draw_mode and fingertip:
 
         smooth_buffer.append(fingertip)
 
-        # weighted smoothing
         avg_x = int(sum(p[0] for p in smooth_buffer) / len(smooth_buffer))
         avg_y = int(sum(p[1] for p in smooth_buffer) / len(smooth_buffer))
 
@@ -57,11 +53,9 @@ while True:
                 np.array(point) - np.array(prev)
             )
 
-            # ignore tiny noise
             if dist > MIN_DISTANCE:
 
-                # interpolate missing points for fast movement
-                steps = int(dist / 10)
+                steps = max(1, int(dist / 10))
 
                 for s in range(1, steps + 1):
 
@@ -79,17 +73,13 @@ while True:
 
     else:
 
-        # finalize stroke
         if len(current_stroke) > 5:
             strokes.append(current_stroke)
 
         current_stroke = []
         smooth_buffer.clear()
 
-    # -----------------------------------
-    # DRAW ALL STROKES
-    # -----------------------------------
-
+    # DRAW STORED STROKES
     for stroke in strokes:
 
         for i in range(1, len(stroke)):
@@ -103,7 +93,7 @@ while True:
                 cv2.LINE_AA
             )
 
-    # active stroke
+    # ACTIVE STROKE
     for i in range(1, len(current_stroke)):
 
         cv2.line(
@@ -129,7 +119,7 @@ while True:
         2
     )
 
-    cv2.imshow("AirDraw Ultimate", output)
+    cv2.imshow("AirSketch AI", output)
 
     key = cv2.waitKey(1)
 
